@@ -29,7 +29,8 @@ $.widget("ui.selectmenu", {
 		icons: null,
 		format: null,
 		escapeHtml: false,
-		bgImage: function() {}
+		bgImage: function() {},
+		customClass: null
 	},
 
 	_create: function() {
@@ -46,8 +47,12 @@ $.widget("ui.selectmenu", {
 		this.isOpen = false;
 
 		// create menu button wrapper
+		var newelementClass = this.widgetBaseClass + ' ui-widget ui-state-default ui-corner-all';
+		if(o.customClass){
+			newelementClass += ' ' + o.customClass;
+		}
 		this.newelement = $( '<a />', {
-			'class': this.widgetBaseClass + ' ui-widget ui-state-default ui-corner-all',
+			'class': newelementClass,
 			'id' : this.ids[ 1 ],
 			'role': 'button',
 			'href': '#nogo',
@@ -199,8 +204,12 @@ $.widget("ui.selectmenu", {
 			'aria-labelledby': this.ids[1],
 			'id': this.ids[2]
 		});
+		var listWrapClass = this.widgetBaseClass + '-menu';
+		if(o.customClass){
+			listWrapClass += ' ' + o.customClass;
+		}
 		this.listWrap = $( "<div />", {
-			'class': self.widgetBaseClass + '-menu'
+			'class': listWrapClass
 		}).append( this.list ).appendTo( o.appendTo );
 
 		// transfer menu click to menu button
